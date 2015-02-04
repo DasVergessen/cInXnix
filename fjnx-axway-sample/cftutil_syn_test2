@@ -1,0 +1,7 @@
+CONFIG TYPE=COM, MEDIACOM=TCPIP,FNAME=xhttp://localhost:1765,TIMEOUT=1200
+SEND PART=win,IDF=bin,fname=/home/axway/Axway/Transfer_CFT/runtime/profile
+SEND PART=win,IDF=bin,fname=/home/axway/Axway/Transfer_CFT/runtime/profile
+SWAITCAT SELECT='(IDTU=="%_CAT_IDTU%")',STATES=T
+PRINT MSG = %_CAT_IDTU%
+PRINT MSG = %_CMDRET%
+

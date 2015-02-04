@@ -1,0 +1,42 @@
+# Copyright (c) Axway 2006-2012 - Synchrony Transfer CFT
+# Makefile for APIXMP1, API2XMP1, API2XMP2 and TCFTSYN
+#
+
+OBJ=./obj
+SRC=.
+EXE=./bin
+INC=./inc
+
+CFLAGS=-c -g
+
+TARGETS=$(EXE)/HttpInvoker $(EXE)/HttpTest
+
+ALL:$(TARGETS)
+
+$(EXE)/HttpTest : $(OBJ)/HttpTest.o $(OBJ)/HttpInvoker.o
+	gcc -o $(EXE)/HttpTest $(OBJ)/HttpTest.o $(OBJ)/HttpInvoker.o
+$(EXE)/HttpInvoker :$(OBJ)/CCHelper.o $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/HttpInvokerTest.o $(OBJ)/Properties.o
+	gcc -o $(EXE)/HttpInvoker  $(OBJ)/CCHelper.o  $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/HttpInvokerTest.o  $(OBJ)/Properties.o -lm	
+$(OBJ)/CCHelper.o : $(SRC)/CCHelper.c $(INC)/CCHelper.h $(INC)/HttpInvoker.h $(INC)/cJSON.h $(INC)/Properties.h
+	gcc $(CFLAGS) $(SRC)/CCHelper.c -o $(OBJ)/CCHelper.o		
+$(OBJ)/HttpInvoker.o : $(SRC)/HttpInvoker.c $(INC)/HttpInvoker.h
+	gcc $(CFLAGS) $(SRC)/HttpInvoker.c -o $(OBJ)/HttpInvoker.o
+$(OBJ)/cJSON.o : $(SRC)/cJSON.c $(INC)/cJSON.h
+	gcc $(CFLAGS) $(SRC)/cJSON.c -o $(OBJ)/cJSON.o
+$(OBJ)/Properties.o : $(SRC)/Properties.c $(INC)/Properties.h
+	gcc $(CFLAGS) $(SRC)/Properties.c -o $(OBJ)/Properties.o
+$(OBJ)/HttpInvokerTest.o : $(SRC)/HttpInvokerTest.c $(INC)/CCHelper.h
+	gcc $(CFLAGS) $(SRC)/HttpInvokerTest.c -o $(OBJ)/HttpInvokerTest.o		
+$(OBJ)/HttpTest.o :$(SRC)/HttpTest.c $(INC)/HttpInvoker.h
+	gcc $(CFLAGS) $(SRC)/HttpTest.c -o $(OBJ)/HttpTest.o	
+	
+#.c.o:
+#	$(CC) -c $< -o $@ $(CFLAGS)   
+
+clean :
+	rm -vf $(OBJ)/*.o $(EXE)/*
+distclean: clean
+	rm $(TARGETS)
+
+
+

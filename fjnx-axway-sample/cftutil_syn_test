@@ -1,0 +1,4 @@
+CONFIG TYPE=COM, MEDIACOM=TCPIP, FNAME=xhttp://localhost:1765, TIMEOUT=1200
+SEND PART=win,IDF=bin,fname=/home/axway/Axway/Transfer_CFT/runtime/testfile,IDA=APPL124,WSTATES=T,WTIMEOUT=1200
+
+

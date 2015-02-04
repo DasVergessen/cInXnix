@@ -1,0 +1,51 @@
+# Copyright (c) Axway 2006-2012 - Synchrony Transfer CFT
+# Makefile for APIXMP1, API2XMP1, API2XMP2 and TCFTSYN
+#
+
+OBJ=./obj
+SRC=.
+EXE=./bin
+INC=./inc
+
+CFLAGS=-c -g
+
+TARGETS=$(EXE)/HttpInvoker $(EXE)/HttpInvoker2 $(EXE)/HttpInvoker3 $(EXE)/HttpTest
+
+ALL:$(TARGETS)
+
+$(EXE)/HttpTest : $(OBJ)/HttpTest.o $(OBJ)/HttpInvoker.o
+	gcc -o $(EXE)/HttpTest $(OBJ)/HttpTest.o $(OBJ)/HttpInvoker.o
+$(EXE)/HttpInvoker :$(OBJ)/CCHelper.o $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/test.o
+	gcc -o $(EXE)/HttpInvoker  $(OBJ)/CCHelper.o  $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/test.o -lm
+$(EXE)/HttpInvoker2 :$(OBJ)/CCHelper2.o $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/test2.o
+	gcc -o $(EXE)/HttpInvoker2  $(OBJ)/CCHelper2.o  $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/test2.o -lm
+$(EXE)/HttpInvoker3 :$(OBJ)/CCHelper.o $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/test3.o
+	gcc -o $(EXE)/HttpInvoker3  $(OBJ)/CCHelper.o  $(OBJ)/HttpInvoker.o $(OBJ)/cJSON.o  $(OBJ)/test3.o -lm	
+
+$(OBJ)/CCHelper.o : $(SRC)/CCHelper.c $(INC)/CCHelper.h $(INC)/HttpInvoker.h $(INC)/cJSON.h
+	gcc $(CFLAGS) $(SRC)/CCHelper.c -o $(OBJ)/CCHelper.o	
+$(OBJ)/CCHelper2.o : $(SRC)/CCHelper2.c $(INC)/CCHelper.h $(INC)/HttpInvoker.h $(INC)/cJSON.h
+	gcc $(CFLAGS) $(SRC)/CCHelper2.c -o $(OBJ)/CCHelper2.o		
+$(OBJ)/HttpInvoker.o : $(SRC)/HttpInvoker.c $(INC)/HttpInvoker.h
+	gcc $(CFLAGS) $(SRC)/HttpInvoker.c -o $(OBJ)/HttpInvoker.o
+$(OBJ)/cJSON.o : $(SRC)/cJSON.c $(INC)/cJSON.h
+	gcc $(CFLAGS) $(SRC)/cJSON.c -o $(OBJ)/cJSON.o
+$(OBJ)/test.o : $(SRC)/test.c $(INC)/CCHelper.h
+	gcc $(CFLAGS) $(SRC)/test.c -o $(OBJ)/test.o
+$(OBJ)/test2.o : $(SRC)/test2.c $(INC)/CCHelper.h
+	gcc $(CFLAGS) $(SRC)/test2.c -o $(OBJ)/test2.o
+$(OBJ)/test3.o : $(SRC)/test3.c $(INC)/CCHelper.h
+	gcc $(CFLAGS) $(SRC)/test3.c -o $(OBJ)/test3.o			
+$(OBJ)/HttpTest.o :$(SRC)/HttpTest.c $(INC)/HttpInvoker.h
+	gcc $(CFLAGS) $(SRC)/HttpTest.c -o $(OBJ)/HttpTest.o	
+	
+#.c.o:
+#	$(CC) -c $< -o $@ $(CFLAGS)   
+
+clean :
+	rm -vf $(OBJ)/*.o $(EXE)/*
+distclean: clean
+	rm $(TARGETS)
+
+
+

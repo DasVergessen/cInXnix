@@ -1,0 +1,19 @@
+{
+	"list":	[{
+			"specialCode":	"2158",
+			"idf":	"FL_CFT2GTW",
+			"serialNumber":	3
+		}, {
+			"specialCode":	"1636",
+			"idf":	"192.111.1.67",
+			"serialNumber":	1
+		}, {
+			"specialCode":	"7540",
+			"idf":	"192.168.1.40",
+			"serialNumber":	68
+		}, {
+			"specialCode":	"1541",
+			"idf":	"192.111.6.17",
+			"serialNumber":	98
+		}]
+}
